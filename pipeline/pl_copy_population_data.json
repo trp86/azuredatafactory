@@ -21,7 +21,14 @@
 			{
 				"name": "Get File Metadata",
 				"type": "GetMetadata",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Check if file exists",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.00:00:30",
 					"retry": 0,
@@ -67,6 +74,21 @@
 						"value": "@equals(activity('Get File Metadata').output.columnCount,13)",
 						"type": "Expression"
 					},
+					"ifFalseActivities": [
+						{
+							"name": "Pipeline fail",
+							"type": "Fail",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"message": {
+									"value": "@concat('Expected Row Count : 13, Actual Row Count : ',string(activity('Get File Metadata').output.columnCount))",
+									"type": "Expression"
+								},
+								"errorCode": "100"
+							}
+						}
+					],
 					"ifTrueActivities": [
 						{
 							"name": "Copy Population Data",
