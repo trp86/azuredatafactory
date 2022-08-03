@@ -5,23 +5,20 @@
 		"factoryName": {
 			"value": "df-trp86"
 		},
-		"ls_adls_accountKey": {
-			"value": ""
-		},
 		"ls_blbstrgtrp86_connectionString": {
 			"value": ""
 		},
-		"ls_dlv2strgtrp86_connectionString": {
+		"ls_dlv2strgtrp86_accountKey": {
 			"value": ""
-		},
-		"ls_adls_properties_typeProperties_url": {
-			"value": "https://dlv2strgtrp86.dfs.core.windows.net/"
 		},
 		"ls_http_opendata_ecdc_eu_properties_typeProperties_url": {
 			"value": "https://github.com"
 		},
 		"trg_ingest_population_data_properties_typeProperties_scope": {
 			"value": "/subscriptions/0f39574d-d756-48cf-b622-0e27a6943bd2/resourceGroups/1-bd7251f9-playground-sandbox/providers/Microsoft.Storage/storageAccounts/blbstrgtrp86"
+		},
+		"ls_dlv2strgtrp86_properties_typeProperties_url": {
+			"value": "https://dlv2strgtrp86.dfs.core.windows.net/"
 		}
 	}
 }

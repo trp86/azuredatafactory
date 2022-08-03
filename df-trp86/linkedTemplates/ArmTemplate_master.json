@@ -7,21 +7,13 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "df-trp86"
 		},
-		"ls_adls_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'ls_adls'"
-		},
 		"ls_blbstrgtrp86_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ls_blbstrgtrp86'"
 		},
-		"ls_dlv2strgtrp86_connectionString": {
+		"ls_dlv2strgtrp86_accountKey": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'ls_dlv2strgtrp86'"
-		},
-		"ls_adls_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://dlv2strgtrp86.dfs.core.windows.net/"
+			"metadata": "Secure string for 'accountKey' of 'ls_dlv2strgtrp86'"
 		},
 		"ls_http_opendata_ecdc_eu_properties_typeProperties_url": {
 			"type": "string",
@@ -30,6 +22,10 @@
 		"trg_ingest_population_data_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/0f39574d-d756-48cf-b622-0e27a6943bd2/resourceGroups/1-bd7251f9-playground-sandbox/providers/Microsoft.Storage/storageAccounts/blbstrgtrp86"
+		},
+		"ls_dlv2strgtrp86_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://dlv2strgtrp86.dfs.core.windows.net/"
 		},
 		"containerUri": {
 			"type": "string",
@@ -58,20 +54,17 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"ls_adls_accountKey": {
-						"value": "[parameters('ls_adls_accountKey')]"
-					},
 					"ls_blbstrgtrp86_connectionString": {
 						"value": "[parameters('ls_blbstrgtrp86_connectionString')]"
 					},
-					"ls_dlv2strgtrp86_connectionString": {
-						"value": "[parameters('ls_dlv2strgtrp86_connectionString')]"
-					},
-					"ls_adls_properties_typeProperties_url": {
-						"value": "[parameters('ls_adls_properties_typeProperties_url')]"
+					"ls_dlv2strgtrp86_accountKey": {
+						"value": "[parameters('ls_dlv2strgtrp86_accountKey')]"
 					},
 					"ls_http_opendata_ecdc_eu_properties_typeProperties_url": {
 						"value": "[parameters('ls_http_opendata_ecdc_eu_properties_typeProperties_url')]"
+					},
+					"ls_dlv2strgtrp86_properties_typeProperties_url": {
+						"value": "[parameters('ls_dlv2strgtrp86_properties_typeProperties_url')]"
 					},
 					"trg_ingest_population_data_properties_typeProperties_scope": {
 						"value": "[parameters('trg_ingest_population_data_properties_typeProperties_scope')]"
