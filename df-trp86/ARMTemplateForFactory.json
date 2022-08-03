@@ -151,6 +151,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
+						"folderPath": "population",
 						"container": "raw"
 					},
 					"columnDelimiter": ",",
