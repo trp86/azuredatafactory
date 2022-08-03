@@ -133,6 +133,12 @@
 									"referenceName": "ds_blbstrgtrp86",
 									"type": "DatasetReference"
 								}
+							],
+							"outputs": [
+								{
+									"referenceName": "ds_blbstrgtrp86",
+									"type": "DatasetReference"
+								}
 							]
 						},
 						{
