@@ -11,6 +11,9 @@
 		"ls_dlv2strgtrp86_connectionString": {
 			"value": ""
 		},
+		"trg_ingest_population_data_properties_typeProperties_scope": {
+			"value": "/subscriptions/0f39574d-d756-48cf-b622-0e27a6943bd2/resourceGroups/1-bd7251f9-playground-sandbox/providers/Microsoft.Storage/storageAccounts/blbstrgtrp86"
+		},
 		"containerUri": {
 			"value": ""
 		},

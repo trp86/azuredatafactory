@@ -14,6 +14,10 @@
 		"ls_dlv2strgtrp86_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ls_dlv2strgtrp86'"
+		},
+		"trg_ingest_population_data_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/0f39574d-d756-48cf-b622-0e27a6943bd2/resourceGroups/1-bd7251f9-playground-sandbox/providers/Microsoft.Storage/storageAccounts/blbstrgtrp86"
 		}
 	},
 	"variables": {
@@ -317,6 +321,37 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trg_ingest_population_data')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "trg_ingest_population_data",
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "pl_copy_population_data",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/population/blobs/population",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('trg_ingest_population_data_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pl_copy_population_data')]"
+			]
 		}
 	]
 }
