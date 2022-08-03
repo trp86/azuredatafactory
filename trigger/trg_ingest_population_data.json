@@ -3,7 +3,7 @@
 	"properties": {
 		"description": "trg_ingest_population_data",
 		"annotations": [],
-		"runtimeState": "Started",
+		"runtimeState": "Stopped",
 		"pipelines": [
 			{
 				"pipelineReference": {

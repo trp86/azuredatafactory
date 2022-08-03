@@ -118,7 +118,7 @@
 								"sink": {
 									"type": "DelimitedTextSink",
 									"storeSettings": {
-										"type": "AzureBlobStorageWriteSettings"
+										"type": "AzureBlobFSWriteSettings"
 									},
 									"formatSettings": {
 										"type": "DelimitedTextWriteSettings",
@@ -136,7 +136,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "ds_blbstrgtrp86",
+									"referenceName": "ds_dlv2strgtrp86",
 									"type": "DatasetReference"
 								}
 							]
