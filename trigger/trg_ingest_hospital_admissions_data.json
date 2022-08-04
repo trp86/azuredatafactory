@@ -1,0 +1,18 @@
+{
+	"name": "trg_ingest_hospital_admissions_data",
+	"properties": {
+		"description": "trg_ingest_hospital_admissions_data",
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2022-08-04T14:35:00",
+				"timeZone": "Romance Standard Time"
+			}
+		}
+	}
+}
