@@ -2,10 +2,15 @@
 	"name": "ls_http_opendata_ecdc_eu",
 	"properties": {
 		"description": "ls_http_opendata_ecdc_eu",
+		"parameters": {
+			"sourceBaseURL": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "HttpServer",
 		"typeProperties": {
-			"url": "https://github.com/",
+			"url": "@{linkedService().sourceBaseURL}",
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous"
 		}
