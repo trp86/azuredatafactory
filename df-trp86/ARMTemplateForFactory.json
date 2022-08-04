@@ -21,7 +21,7 @@
 		},
 		"ls_http_opendata_ecdc_eu_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://github.com/"
+			"defaultValue": "@{linkedService().sourceBaseURL}"
 		}
 	},
 	"variables": {
@@ -283,6 +283,10 @@
 									"relativeURL": {
 										"value": "@pipeline().parameters.sourceRelativeURL",
 										"type": "Expression"
+									},
+									"baseURL": {
+										"value": "@pipeline().parameters.sourceBaseUrl",
+										"type": "Expression"
 									}
 								}
 							}
@@ -310,6 +314,9 @@
 						"type": "string"
 					},
 					"sinkFileName": {
+						"type": "string"
+					},
+					"sourceBaseUrl": {
 						"type": "string"
 					}
 				},
@@ -464,10 +471,19 @@
 				"description": "ds_cases_deaths_raw_csv_http",
 				"linkedServiceName": {
 					"referenceName": "ls_http_opendata_ecdc_eu",
-					"type": "LinkedServiceReference"
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"sourceBaseURL": {
+							"value": "@dataset().baseURL",
+							"type": "Expression"
+						}
+					}
 				},
 				"parameters": {
 					"relativeURL": {
+						"type": "string"
+					},
+					"baseURL": {
 						"type": "string"
 					}
 				},
@@ -530,6 +546,11 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"description": "ls_http_opendata_ecdc_eu",
+				"parameters": {
+					"sourceBaseURL": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "HttpServer",
 				"typeProperties": {

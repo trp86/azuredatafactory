@@ -15,7 +15,7 @@
 			"value": "https://dlv2strgtrp86.dfs.core.windows.net/"
 		},
 		"ls_http_opendata_ecdc_eu_properties_typeProperties_url": {
-			"value": "https://github.com/"
+			"value": "@{linkedService().sourceBaseURL}"
 		},
 		"containerUri": {
 			"value": ""
