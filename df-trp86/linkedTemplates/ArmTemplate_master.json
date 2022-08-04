@@ -15,17 +15,13 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ls_dlv2strgtrp86'"
 		},
-		"ls_http_opendata_ecdc_eu_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://github.com"
-		},
-		"trg_ingest_population_data_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/0f39574d-d756-48cf-b622-0e27a6943bd2/resourceGroups/1-bd7251f9-playground-sandbox/providers/Microsoft.Storage/storageAccounts/blbstrgtrp86"
-		},
 		"ls_dlv2strgtrp86_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://dlv2strgtrp86.dfs.core.windows.net/"
+		},
+		"ls_http_opendata_ecdc_eu_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://github.com/"
 		},
 		"containerUri": {
 			"type": "string",
@@ -60,14 +56,11 @@
 					"ls_dlv2strgtrp86_accountKey": {
 						"value": "[parameters('ls_dlv2strgtrp86_accountKey')]"
 					},
-					"ls_http_opendata_ecdc_eu_properties_typeProperties_url": {
-						"value": "[parameters('ls_http_opendata_ecdc_eu_properties_typeProperties_url')]"
-					},
 					"ls_dlv2strgtrp86_properties_typeProperties_url": {
 						"value": "[parameters('ls_dlv2strgtrp86_properties_typeProperties_url')]"
 					},
-					"trg_ingest_population_data_properties_typeProperties_scope": {
-						"value": "[parameters('trg_ingest_population_data_properties_typeProperties_scope')]"
+					"ls_http_opendata_ecdc_eu_properties_typeProperties_url": {
+						"value": "[parameters('ls_http_opendata_ecdc_eu_properties_typeProperties_url')]"
 					}
 				}
 			},
