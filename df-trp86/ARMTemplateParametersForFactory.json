@@ -4,18 +4,6 @@
 	"parameters": {
 		"factoryName": {
 			"value": "df-trp86"
-		},
-		"ls_blbstrgtrp86_connectionString": {
-			"value": ""
-		},
-		"ls_dlv2strgtrp86_accountKey": {
-			"value": ""
-		},
-		"ls_dlv2strgtrp86_properties_typeProperties_url": {
-			"value": "https://dlv2strgtrp86.dfs.core.windows.net/"
-		},
-		"ls_http_opendata_ecdc_eu_properties_typeProperties_url": {
-			"value": "@{linkedService().sourceBaseURL}"
 		}
 	}
 }
