@@ -1,0 +1,69 @@
+{
+	"name": "df_transform_cases_deaths",
+	"properties": {
+		"description": "df_transform_cases_deaths",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_raw_cases_and_deaths",
+						"type": "DatasetReference"
+					},
+					"name": "CasesAndDeathsSource"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "FilterEuropeOnly"
+				},
+				{
+					"name": "SelectOnlyRequiredFields"
+				},
+				{
+					"name": "PivotColumns"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          country as string,",
+				"          country_code as string,",
+				"          continent as string,",
+				"          population as integer,",
+				"          indicator as string,",
+				"          daily_count as integer,",
+				"          date as date,",
+				"          rate_14_day as double,",
+				"          source as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: true,",
+				"     ignoreNoFilesFound: false) ~> CasesAndDeathsSource",
+				"CasesAndDeathsSource filter(continent == 'Europe' && not(isNull(country_code))) ~> FilterEuropeOnly",
+				"FilterEuropeOnly select(mapColumn(",
+				"          country,",
+				"          country_code,",
+				"          population,",
+				"          indicator,",
+				"          daily_count,",
+				"          source,",
+				"          each(match(name == 'date'),",
+				"               'reported' + '_date' = $$)",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> SelectOnlyRequiredFields",
+				"SelectOnlyRequiredFields pivot(groupBy(country,",
+				"          country_code,",
+				"          population,",
+				"          source,",
+				"          reported_date,",
+				"          {} = ERROR_FUNCTION('')),",
+				"     pivotBy(indicator, ['confirmed cases', 'deaths']),",
+				"     count = sum(daily_count),",
+				"     columnNaming: '$N$V',",
+				"     lateral: false) ~> PivotColumns"
+			]
+		}
+	}
+}
