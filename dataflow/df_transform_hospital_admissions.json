@@ -18,6 +18,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "CountryLookup"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_dim_date_lookup",
+						"type": "DatasetReference"
+					},
+					"name": "DateLookup"
 				}
 			],
 			"sinks": [],
@@ -30,6 +37,18 @@
 				},
 				{
 					"name": "SelectReqdColumns"
+				},
+				{
+					"name": "SplitDailyFromWeekly"
+				},
+				{
+					"name": "WeekLookup"
+				},
+				{
+					"name": "JoinWeekLookupAndWeeklyData"
+				},
+				{
+					"name": "SelectReqdColumnsForWeekly"
 				}
 			],
 			"scriptLines": [
@@ -55,6 +74,23 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> CountryLookup",
+				"source(output(",
+				"          date_key as date,",
+				"          date as date,",
+				"          year as short,",
+				"          month as short,",
+				"          day as short,",
+				"          day_name as string,",
+				"          day_of_year as short,",
+				"          week_of_month as short,",
+				"          week_of_year as short,",
+				"          month_name as string,",
+				"          year_month as integer,",
+				"          year_week as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> DateLookup",
 				"HospitalAdmissionsSource select(mapColumn(",
 				"          country,",
 				"          indicator,",
@@ -82,7 +118,31 @@
 				"          population",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> SelectReqdColumns"
+				"     skipDuplicateMapOutputs: true) ~> SelectReqdColumns",
+				"SelectReqdColumns split(indicator == 'Daily hospital occupancy' || indicator == 'Daily ICU occupancy' ,",
+				"     disjoint: false) ~> SplitDailyFromWeekly@(Daily, Weekly)",
+				"DateLookup aggregate(groupBy(year,",
+				"          week_of_year),",
+				"     week_start_date = min(date),",
+				"          week_end_date = max(date)) ~> WeekLookup",
+				"SplitDailyFromWeekly@Weekly, WeekLookup join(reported_year_week == week_of_year,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JoinWeekLookupAndWeeklyData",
+				"JoinWeekLookupAndWeeklyData select(mapColumn(",
+				"          country,",
+				"          country_code_2_digit,",
+				"          country_code_3_digit,",
+				"          population,",
+				"          reported_year_week,",
+				"          reported_week_start_date = week_start_date,",
+				"          reported_week_end_date = week_end_date,",
+				"          source,",
+				"          week_of_year",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectReqdColumnsForWeekly"
 			]
 		}
 	}
