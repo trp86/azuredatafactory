@@ -49,6 +49,9 @@
 				},
 				{
 					"name": "SelectReqdColumnsForWeekly"
+				},
+				{
+					"name": "AddNewColumnsToWeeklyData"
 				}
 			],
 			"scriptLines": [
@@ -75,7 +78,7 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> CountryLookup",
 				"source(output(",
-				"          date_key as date,",
+				"          date_key as string,",
 				"          date as date,",
 				"          year as short,",
 				"          month as short,",
@@ -119,13 +122,14 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectReqdColumns",
-				"SelectReqdColumns split(indicator == 'Daily hospital occupancy' || indicator == 'Daily ICU occupancy' ,",
+				"SelectReqdColumns split(indicator == 'Daily hospital occupancy' || indicator == 'Daily ICU occupancy',",
 				"     disjoint: false) ~> SplitDailyFromWeekly@(Daily, Weekly)",
 				"DateLookup aggregate(groupBy(year,",
 				"          week_of_year),",
 				"     week_start_date = min(date),",
 				"          week_end_date = max(date)) ~> WeekLookup",
-				"SplitDailyFromWeekly@Weekly, WeekLookup join(reported_year_week == week_of_year,",
+				"AddNewColumnsToWeeklyData, WeekLookup join(reported_week == week_of_year",
+				"     && reported_year == year,",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -142,7 +146,9 @@
 				"          week_of_year",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> SelectReqdColumnsForWeekly"
+				"     skipDuplicateMapOutputs: true) ~> SelectReqdColumnsForWeekly",
+				"SplitDailyFromWeekly@Weekly derive(reported_week = toShort(split(reported_year_week, '-W') [2]),",
+				"          reported_year = toShort(split(reported_year_week, '-') [1])) ~> AddNewColumnsToWeeklyData"
 			]
 		}
 	}
