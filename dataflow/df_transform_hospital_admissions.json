@@ -48,10 +48,10 @@
 					"name": "JoinWeekLookupAndWeeklyData"
 				},
 				{
-					"name": "SelectReqdColumnsForWeekly"
+					"name": "AddNewColumnsToWeeklyData"
 				},
 				{
-					"name": "AddNewColumnsToWeeklyData"
+					"name": "SelectReqdColumnsAfterJoin"
 				}
 			],
 			"scriptLines": [
@@ -134,6 +134,8 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> JoinWeekLookupAndWeeklyData",
+				"SplitDailyFromWeekly@Weekly derive(reported_week = toShort(split(reported_year_week, '-W') [2]),",
+				"          reported_year = toShort(split(reported_year_week, '-') [1])) ~> AddNewColumnsToWeeklyData",
 				"JoinWeekLookupAndWeeklyData select(mapColumn(",
 				"          country,",
 				"          country_code_2_digit,",
@@ -141,14 +143,10 @@
 				"          population,",
 				"          reported_year_week,",
 				"          reported_week_start_date = week_start_date,",
-				"          reported_week_end_date = week_end_date,",
-				"          source,",
-				"          week_of_year",
+				"          reported_week_end_date = week_end_date",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> SelectReqdColumnsForWeekly",
-				"SplitDailyFromWeekly@Weekly derive(reported_week = toShort(split(reported_year_week, '-W') [2]),",
-				"          reported_year = toShort(split(reported_year_week, '-') [1])) ~> AddNewColumnsToWeeklyData"
+				"     skipDuplicateMapOutputs: true) ~> SelectReqdColumnsAfterJoin"
 			]
 		}
 	}
